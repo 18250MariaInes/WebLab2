@@ -67,6 +67,7 @@ const renderCelda=({
 	root,*/
 })=>{
 	//dupc
+	console.log(row);
 	const celda = document.createElement('div');
     celda.style.width = '30px';
     celda.style.height = '30px';
@@ -85,7 +86,7 @@ const renderCelda=({
     
     celda.onclick=()=>{
     	celda.style.backgroundColor='red';
-		console.log(celda.row);
+		console.log(celda.value, celda.row, celda.col);
 	}
     return celda;
 	/*celda.onclick=()=>{
@@ -108,26 +109,26 @@ const render = (mount, state) => {
     gboard.style.height='315px';
     gboard.style.padding = '25px';
     let rowCounter=0;
-    state.board.map(function(x){
-    	//console.log("contador de filas: "+rowCounter);
+    state.board.map((x)=>{
+    	console.log(x);
     	x.map(
-    		(rowCounter, colCounter, x)=> renderCelda({
+    		(element, index)=> renderCelda({
     			
     			row:rowCounter,
     			col:colCounter, 
-    			value:x[colCounter],
+    			value:x[colCounter++],
     			
-    		}),
+    		})
     		//console.log(state.board[row][col]),
-    		console.log("contador de filas 2: "+rowCounter),
-    		colCounter++,
+    		//console.log("contador de filas 2: "+rowCounter),
     		
-    		
+    	
 
     	).forEach(
     		celda=> gboard.appendChild(celda),
     	);
     	rowCounter++
+    	colCounter=0;
     	
 
 	});
