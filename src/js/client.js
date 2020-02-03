@@ -1,5 +1,5 @@
 //ES6
-import isEqual from 'lodash/isEqual'
+//import isEqual from 'lodash/isEqual'
 /*const sumar=function(a,b){
 	return a+b;
   
@@ -59,8 +59,8 @@ root.onClick = () =>{
 	alert('Si')
 };*/
 
-
-const renderLuz = ({
+//EJEMPLO DE SAMUEL SEMÁFORO
+/*const renderLuz = ({
     color,
     size = 200,
     isTurnedOn = false,
@@ -76,11 +76,11 @@ const renderLuz = ({
 
 
 const render = (mount, state) => {
-    const { turnedOnIndex } = state;
+    /*const { turnedOnIndex } = state;
 
     const semaforo = document.createElement('div');
     semaforo.style.backgroundColor = 'black';
-    /*semaforo.style.width = '200px';*/
+    semaforo.style.width = '200px';
     semaforo.style.padding = '25px';
     [
         'red',
@@ -108,6 +108,8 @@ const render = (mount, state) => {
 
     mount.appendChild(semaforo);
     mount.appendChild(boton);
+    console.log("hola");
+
 };
 
 
@@ -117,6 +119,80 @@ const APP_STATE = {
 
 const root = document.getElementById('root');
 
-render(root, APP_STATE);
+render(root, APP_STATE);*/
+
+const renderCelda=({
+	row, 
+	col,
+	value,
+	state,
+	root,
+})=>{
+	//dupc
+	const celda = document.createElement('div');
+    celda.style.width = `${size}px`;
+    celda.style.height = `${size}px`;
+    /*celda.style.borderRadius = `${size / 2}px`;*/
+    celda.style.backgroundColor = 'red';
+    
+    return celda;
+	/*celda.onclick=()=>{
+		if (value===0){
+			state[row][col]=state.player1Turn?1:-1;
+			state.player1Turn=!state.player1Turn;
+			root.innerHTML="";
+			render(root, state);
+		}
+	}*/
+}
+
+const render = (mount, state) => {
+	const gboard = document.createElement('div');
+	gboard.style.backgroundColor = 'black';
+    gboard.style.width = '200px';
+    gboard.style.padding = '25px';
+    state.board.map(function(x){
+    	x.map(function(y){
+    		console.log(y);
+
+    	});
+    });
+    /*celda=>gboard.appendChild(celda);*/
+    /*for (var i = 0 ; i >= state.board.length; i++) {
+    	for (var j = 0; j >= i.length; j++) {
+    		(i,j,value)=>renderCelda({
+    			i,
+    			j,
+    			value,
+    		}),
+    		celda=>gboard.appendChild(celda);
+    	}
+    }*/
+    
+
+    mount.appendChild(gboard);
+    
+	
+}
+const OTHELLO_STATE={
+	player1Turn:true,
+	board:[
+		[0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0],
+		[0,0,0,1,-1,0,0,0],
+		[0,0,0,-1,1,0,0,0],
+		[0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0]
+	],
+}
+
+
+const root = document.getElementById('root');
+
+render(root, OTHELLO_STATE);
+//console.log(OTHELLO_STATE.board);
+
 
 
