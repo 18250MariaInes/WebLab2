@@ -59,89 +59,29 @@ root.onClick = () =>{
 	alert('Si')
 };*/
 
-//EJEMPLO DE SAMUEL SEMÁFORO
-/*const renderLuz = ({
-    color,
-    size = 200,
-    isTurnedOn = false,
-}) => {
-    const luz = document.createElement('div');
-    luz.style.width = `${size}px`;
-    luz.style.height = `${size}px`;
-    luz.style.borderRadius = `${size / 2}px`;
-    luz.style.backgroundColor = color;
-    luz.style.opacity = isTurnedOn ? 1.0 : 0.25;
-    return luz;
-}
-
-
-const render = (mount, state) => {
-    /*const { turnedOnIndex } = state;
-
-    const semaforo = document.createElement('div');
-    semaforo.style.backgroundColor = 'black';
-    semaforo.style.width = '200px';
-    semaforo.style.padding = '25px';
-    [
-        'red',
-        'yellow',
-        'green'
-    ].map(
-        (color, index) => renderLuz({
-            color,
-            isTurnedOn: index === turnedOnIndex,
-        }),
-    ).forEach(
-        luz => semaforo.appendChild(luz),
-    );
-
-    const boton = document.createElement('button');
-    boton.style.width = '250px';
-    boton.style.fontSize = '20px';
-    boton.innerText = 'Siguiente';
-
-    boton.onclick = () => {
-        state.turnedOnIndex = (state.turnedOnIndex + 1) % 3;
-        root.innerHTML = '';
-        render(root, state);
-    };
-
-    mount.appendChild(semaforo);
-    mount.appendChild(boton);
-    console.log("hola");
-
-};
-
-
-const APP_STATE = {
-    turnedOnIndex: 1,
-};
-
-const root = document.getElementById('root');
-
-render(root, APP_STATE);*/
-
 const renderCelda=({
 	row, 
 	col,
 	value,
-	/*state,
+	state,/*
 	root,*/
 })=>{
 	//dupc
 	const celda = document.createElement('div');
-    celda.style.width = '25px';
-    celda.style.height = '25px';
+    celda.style.width = '30px';
+    celda.style.height = '30px';
     celda.style.padding='2px';
     celda.style.margin='2px';
     celda.style.float='left';
-    celda.row=row;
     celda.col=col;
+    celda.row=row;
     celda.value=value;
-    /*celda.style.borderRadius = `${size / 2}px`;*/
-    if (value!=0){
+    celda.style.borderRadius = '18px';
+    if (value==0){
     	celda.style.backgroundColor = 'grey';
-    }else{celda.style.backgroundColor = 'grey';}
+    }else if (value==1){
+    	celda.style.backgroundColor = 'white';
+    }else{celda.style.backgroundColor = 'black';}
     
     celda.onclick=()=>{
     	celda.style.backgroundColor='red';
@@ -160,44 +100,39 @@ const renderCelda=({
 }
 
 const render = (mount, state) => {
-	let row=0;
-	let col=0;
+	
+	let colCounter=0;
 	const gboard = document.createElement('div');
-	gboard.style.backgroundColor = 'black';
-    gboard.style.width = '280px';
-    gboard.style.height='280px';
+	gboard.style.backgroundColor = 'green';
+    gboard.style.width = '315px';
+    gboard.style.height='315px';
     gboard.style.padding = '25px';
+    let rowCounter=0;
     state.board.map(function(x){
-    	console.log(col);
-    	x.map(/*function(y){*/
-    		(row, col, x)=> renderCelda({
-    			row:row,
-    			col:col, 
-    			value:x,
+    	//console.log("contador de filas: "+rowCounter);
+    	x.map(
+    		(rowCounter, colCounter, x)=> renderCelda({
+    			
+    			row:rowCounter,
+    			col:colCounter, 
+    			value:x[colCounter],
+    			
     		}),
     		//console.log(state.board[row][col]),
-    		col++,
+    		console.log("contador de filas 2: "+rowCounter),
+    		colCounter++,
     		
     		
 
-    	/*}*/).forEach(
+    	).forEach(
     		celda=> gboard.appendChild(celda),
     	);
-    	row++
+    	rowCounter++
+    	
 
 	});
 	
-    /*celda=>gboard.appendChild(celda);*/
-    /*for (var i = 0 ; i >= state.board.length; i++) {
-    	for (var j = 0; j >= i.length; j++) {
-    		(i,j,value)=>renderCelda({
-    			i,
-    			j,
-    			value,
-    		}),
-    		celda=>gboard.appendChild(celda);
-    	}
-    }*/
+    
     
 
     mount.appendChild(gboard);
