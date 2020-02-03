@@ -125,15 +125,19 @@ const renderCelda=({
 	row, 
 	col,
 	value,
-	state,
-	root,
+	/*state,
+	root,*/
 })=>{
 	//dupc
 	const celda = document.createElement('div');
-    celda.style.width = `${size}px`;
-    celda.style.height = `${size}px`;
+    celda.style.width = '25px';
+    celda.style.height = '25px';
+    celda.style.padding='2px';
+    celda.style.margin='2px';
     /*celda.style.borderRadius = `${size / 2}px`;*/
-    celda.style.backgroundColor = 'red';
+    if (value!=0){
+    	celda.style.backgroundColor = 'blue';
+    }else{celda.style.backgroundColor = 'red';}
     
     return celda;
 	/*celda.onclick=()=>{
@@ -147,16 +151,30 @@ const renderCelda=({
 }
 
 const render = (mount, state) => {
+	let row=0;
+	let col=0;
 	const gboard = document.createElement('div');
 	gboard.style.backgroundColor = 'black';
     gboard.style.width = '200px';
     gboard.style.padding = '25px';
     state.board.map(function(x){
-    	x.map(function(y){
-    		console.log(y);
+    	x.map(/*function(y){*/
+    		(row, col,y)=> renderCelda({
+    			row,
+    			col, 
+    			value:y,
+    		}),
+    		
+    		col++,
+    		//console.log(state[row][col]);
+    		
 
-    	});
-    });
+    	/*}*/).forEach(
+    		celda=> gboard.appendChild(celda),
+    	);
+    	row++
+    	
+	});
     /*celda=>gboard.appendChild(celda);*/
     /*for (var i = 0 ; i >= state.board.length; i++) {
     	for (var j = 0; j >= i.length; j++) {
