@@ -67,7 +67,7 @@ const renderCelda=({
 	root,*/
 })=>{
 	//dupc
-	console.log(row);
+	//console.log(row);
 	const celda = document.createElement('div');
     celda.style.width = '30px';
     celda.style.height = '30px';
@@ -77,6 +77,7 @@ const renderCelda=({
     celda.col=col;
     celda.row=row;
     celda.value=value;
+    celda.state=state;
     celda.style.borderRadius = '18px';
     if (value==0){
     	celda.style.backgroundColor = 'grey';
@@ -85,8 +86,16 @@ const renderCelda=({
     }else{celda.style.backgroundColor = 'black';}
     
     celda.onclick=()=>{
-    	celda.style.backgroundColor='red';
-		console.log(celda.value, celda.row, celda.col);
+    	/*celda.style.backgroundColor='red';
+		console.log(celda.value, celda.row, celda.col);*/
+		if (value===0){
+			state.board[row][col]=state.player1Turn?1:-1;
+			//state.player1Turn=!state.player1Turn;
+			root.innerHTML="";
+			//console.log("hola de celda");
+			render(root, state);
+		}
+		//console.log(state.board);
 	}
     return celda;
 	/*celda.onclick=()=>{
@@ -100,7 +109,15 @@ const renderCelda=({
 	
 }
 
+const verificarGanador=(state)=>{
+	
+
+}
+
 const render = (mount, state) => {
+	const {player1Turn}=state;
+
+	//const {board}=state;
 	
 	let colCounter=0;
 	const gboard = document.createElement('div');
@@ -110,13 +127,14 @@ const render = (mount, state) => {
     gboard.style.padding = '25px';
     let rowCounter=0;
     state.board.map((x)=>{
-    	console.log(x);
+    	//console.log(x);
     	x.map(
     		(element, index)=> renderCelda({
     			
     			row:rowCounter,
     			col:colCounter, 
     			value:x[colCounter++],
+    			state:state,
     			
     		})
     		//console.log(state.board[row][col]),
@@ -132,11 +150,22 @@ const render = (mount, state) => {
     	
 
 	});
+	const boton = document.createElement('button');
+    boton.style.width = '365px';
+    boton.style.fontSize = '20px';
+    boton.innerText = 'Siguiente turno';
+    boton.onclick=()=>{
+    	//console.log("hola");
+    	state.player1Turn=!state.player1Turn;
+    	root.innerHTML = '';
+    	render (root, state);
+    }
 	
     
     
 
     mount.appendChild(gboard);
+    mount.appendChild(boton);
     
 	
 }
