@@ -1,5 +1,5 @@
 //ES6
-//import isEqual from 'lodash/isEqual'
+import flattenDeep from 'lodash/flattenDeep'
 /*const sumar=function(a,b){
 	return a+b;
   
@@ -108,9 +108,11 @@ const renderCelda=({
 	}*/
 	
 }
+const sumar = (a = 0, b) => a + b;
 
 const verificarGanador=(state)=>{
-	
+	//state.board.reduce(sumar);
+	console.log(flattenDeep(state.board).reduce(sumar));
 
 }
 
@@ -163,7 +165,7 @@ const render = (mount, state) => {
 	
     
     
-
+    verificarGanador(state);
     mount.appendChild(gboard);
     mount.appendChild(boton);
     
