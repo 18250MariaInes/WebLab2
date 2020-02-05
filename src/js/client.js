@@ -1,5 +1,6 @@
 //ES6
 import flattenDeep from 'lodash/flattenDeep'
+import includes from 'lodash/includes'
 /*const sumar=function(a,b){
 	return a+b;
   
@@ -94,6 +95,14 @@ const renderCelda=({
 			root.innerHTML="";
 			//console.log("hola de celda");
 			render(root, state);
+		}else if (value===-1 && state.player1Turn){
+			state.board[row][col]=1;
+			root.innerHTML="";
+			render(root, state);
+		}else if (value===1 && !state.player1Turn){
+			state.board[row][col]=-1;
+			root.innerHTML="";
+			render(root, state);
 		}
 		//console.log(state.board);
 	}
@@ -112,6 +121,16 @@ const sumar = (a = 0, b) => a + b;
 
 const verificarGanador=(state)=>{
 	//state.board.reduce(sumar);
+	if(!includes(flattenDeep(state.board),0)){
+		if (flattenDeep(state.board).reduce(sumar)>0){
+			alert('Ganó Jugador1');
+		}
+		else if(flattenDeep(state.board).reduce(sumar)<0){
+			alert('Ganó Jugador2');
+		}else{
+			alert('Empate');
+		}
+	}
 	console.log(flattenDeep(state.board).reduce(sumar));
 
 }
@@ -161,6 +180,12 @@ const render = (mount, state) => {
     	state.player1Turn=!state.player1Turn;
     	root.innerHTML = '';
     	render (root, state);
+    	if (state.player1Turn){
+    		alert('Turno de Jugador1');
+    	}else{
+    		alert('Turno de Jugador2');
+    	}
+    	
     }
 	
     
