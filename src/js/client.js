@@ -64,14 +64,12 @@ const renderCelda=({
 	row, 
 	col,
 	value,
-	state,/*
-	root,*/
+	state,
 })=>{
 	//dupc
-	//console.log(row);
 	const celda = document.createElement('div');
-    celda.style.width = '30px';
-    celda.style.height = '30px';
+    celda.style.width = '40px';
+    celda.style.height = '40px';
     celda.style.padding='2px';
     celda.style.margin='2px';
     celda.style.float='left';
@@ -79,21 +77,17 @@ const renderCelda=({
     celda.row=row;
     celda.value=value;
     celda.state=state;
-    celda.style.borderRadius = '18px';
+    celda.style.borderRadius = '25px';
     if (value==0){
     	celda.style.backgroundColor = 'grey';
     }else if (value==1){
-    	celda.style.backgroundColor = 'white';
-    }else{celda.style.backgroundColor = 'black';}
+    	celda.style.backgroundColor = 'black';
+    }else{celda.style.backgroundColor = 'white';}
     
     celda.onclick=()=>{
-    	/*celda.style.backgroundColor='red';
-		console.log(celda.value, celda.row, celda.col);*/
 		if (value===0){
 			state.board[row][col]=state.player1Turn?1:-1;
-			//state.player1Turn=!state.player1Turn;
 			root.innerHTML="";
-			//console.log("hola de celda");
 			render(root, state);
 		}else if (value===-1 && state.player1Turn){
 			state.board[row][col]=1;
@@ -104,29 +98,19 @@ const renderCelda=({
 			root.innerHTML="";
 			render(root, state);
 		}
-		//console.log(state.board);
 	}
     return celda;
-	/*celda.onclick=()=>{
-		if (value===0){
-			state[row][col]=state.player1Turn?1:-1;
-			state.player1Turn=!state.player1Turn;
-			root.innerHTML="";
-			render(root, state);
-		}
-	}*/
 	
 }
 const sumar = (a = 0, b) => a + b;
 
 const verificarGanador=(state)=>{
-	//state.board.reduce(sumar);
 	if(!includes(flattenDeep(state.board),0)){
 		if (flattenDeep(state.board).reduce(sumar)>0){
-			alert('Ganó Jugador1');
+			alert('Ganó Jugador1 (Negro)');
 		}
 		else if(flattenDeep(state.board).reduce(sumar)<0){
-			alert('Ganó Jugador2');
+			alert('Ganó Jugador2 (Blanco)');
 		}else{
 			alert('Empate');
 		}
@@ -137,18 +121,14 @@ const verificarGanador=(state)=>{
 
 const render = (mount, state) => {
 	const {player1Turn}=state;
-
-	//const {board}=state;
-	
 	let colCounter=0;
 	const gboard = document.createElement('div');
 	gboard.style.backgroundColor = 'green';
-    gboard.style.width = '315px';
-    gboard.style.height='315px';
+    gboard.style.width = '400px';
+    gboard.style.height='400px';
     gboard.style.padding = '25px';
     let rowCounter=0;
     state.board.map((x)=>{
-    	//console.log(x);
     	x.map(
     		(element, index)=> renderCelda({
     			
@@ -158,11 +138,6 @@ const render = (mount, state) => {
     			state:state,
     			
     		})
-    		//console.log(state.board[row][col]),
-    		//console.log("contador de filas 2: "+rowCounter),
-    		
-    	
-
     	).forEach(
     		celda=> gboard.appendChild(celda),
     	);
@@ -172,29 +147,24 @@ const render = (mount, state) => {
 
 	});
 	const boton = document.createElement('button');
-    boton.style.width = '365px';
+    boton.style.width = '450px';
+    boton.style.height = '40px';
     boton.style.fontSize = '20px';
-    boton.innerText = 'Siguiente turno';
+    boton.innerText = 'Ceder turno';
     boton.onclick=()=>{
-    	//console.log("hola");
     	state.player1Turn=!state.player1Turn;
     	root.innerHTML = '';
     	render (root, state);
     	if (state.player1Turn){
-    		alert('Turno de Jugador1');
+    		alert('Turno de Jugador1 (Negro)');
     	}else{
-    		alert('Turno de Jugador2');
+    		alert('Turno de Jugador2 (Blanco)');
     	}
     	
     }
-	
-    
-    
     verificarGanador(state);
     mount.appendChild(gboard);
-    mount.appendChild(boton);
-    
-	
+    mount.appendChild(boton);	
 }
 const OTHELLO_STATE={
 	player1Turn:true,
@@ -209,12 +179,8 @@ const OTHELLO_STATE={
 		[0,0,0,0,0,0,0,0]
 	],
 }
-
-
 const root = document.getElementById('root');
-
 render(root, OTHELLO_STATE);
-//console.log(OTHELLO_STATE.board);
 
 
 
