@@ -1,65 +1,9 @@
 //ES6
+//Lab 2 de Web juego Othello
+//Maria Ines Vasquez 18250
 import flattenDeep from 'lodash/flattenDeep'
 import includes from 'lodash/includes'
-/*const sumar=function(a,b){
-	return a+b;
-  
-};*/
-
-//alert(sumar(4,5));
-//const x=5;
-/*const elementos =[1,2,3];
-elementos.push(4);
-//funciones arrow
-const sumar = (a,b) =>a+b;
-//alert(sumar(8,9));
-
-
-
-const enteros=[1,2,3,4,5];
-//const cuadrados=[];
-//console.log(enteros.map(i =>i*i));
-
-console.log(enteros.reduce(sumar, 0));
-
-
-
-/* COMO LO HARIA
-for (let i=0; i<= enteros.lenght; i++){
-	c
-}*/
-
-/*const miObjeto={
-	x:0,
-	y:100,
-	w:{
-		b='nene',
-	},
-};
-const miOtroObjeto={
-	...miObjeto,
-	z:-2,
-};
-
-//miObjeto.w.push(4);
-//console.log(miObjeto['algo bien loco']);
-console.log(miOtroObjeto);
-
-const {x,y, w:{b}}=miObjeto;
-console.log(b);*/
-/*const x={a:1, b:2};
-const y={a:1, b:2};*/
-
-/*const root=document.getElementById('root');
-console.log(root, typeof(root));*/
-
-/*root.style.height='100px';
-root.style.backgroundColor='red';
-
-root.onClick = () =>{
-	alert('Si')
-};*/
-
+//funcion que renderiza las celdas y brinda todas sus propiedades y análisis sobre si se puede colocar la ficha al hacer click
 const renderCelda=({
 	row, 
 	col,
@@ -83,27 +27,112 @@ const renderCelda=({
     }else if (value==1){
     	celda.style.backgroundColor = 'black';
     }else{celda.style.backgroundColor = 'white';}
-    
+    //analiza si es valido donde quiere colocar la ficha dado que siempre tiene que tener en anexo a otra ficha
     celda.onclick=()=>{
-		if (value===0){
-			state.board[row][col]=state.player1Turn?1:-1;
-			root.innerHTML="";
-			render(root, state);
-		}else if (value===-1 && state.player1Turn){
-			state.board[row][col]=1;
-			root.innerHTML="";
-			render(root, state);
-		}else if (value===1 && !state.player1Turn){
-			state.board[row][col]=-1;
-			root.innerHTML="";
-			render(root, state);
-		}
+    	const cambioState=()=>{
+    		if (value===0){
+					state.board[row][col]=state.player1Turn?1:-1;
+					root.innerHTML="";
+					render(root, state);
+				}else if (value===-1 && state.player1Turn){
+					state.board[row][col]=1;
+					root.innerHTML="";
+					render(root, state);
+				}else if (value===1 && !state.player1Turn){
+					state.board[row][col]=-1;
+					root.innerHTML="";
+					render(root, state);
+				}
+    	}
+    	if((row-1)<0 && (col-1)<0){
+    		if(state.board[row+1][col+1]===0 && state.board[row+1][col]===0 && state.board[row][col+1]===0){
+    		alert("Ese movimiento no se puede hacer")
+
+	    	}
+	    	else{
+				cambioState();
+			}
+
+    	}else if((col-1)<0 && (row+1)>7){
+    		if(state.board[row-1][col]===0 && state.board[row-1][col+1]===0 && state.board[row][col+1]===0){
+    		alert("Ese movimiento no se puede hacer")
+
+	    	}
+	    	else{
+				cambioState();
+			}
+
+    	}else if((row+1)>7 && (col+1)>7){
+    		if(state.board[row-1][col]===0 && state.board[row][col-1]===0 && state.board[row-1][col-1]===0 ){
+    		alert("Ese movimiento no se puede hacer")
+
+	    	}
+	    	else{
+				cambioState();
+			}
+
+    	}else if((row-1)<0 && (col+1)>7){
+    		if(state.board[row][col-1]===0 && state.board[row+1][col]===0 && state.board[row+1][col-1]===0){
+    		alert("Ese movimiento no se puede hacer")
+
+	    	}
+	    	else{
+				cambioState();
+			}
+
+    	}else if ((row-1)<0){
+    		if(state.board[row][col-1]===0 &&  state.board[row+1][col+1]===0 && state.board[row+1][col]===0 && state.board[row][col+1]===0 && state.board[row+1][col-1]===0){
+    		alert("Ese movimiento no se puede hacer")
+
+	    	}
+	    	else{
+				cambioState();
+			}
+
+    	}else if((row+1)>7){
+    		if(state.board[row-1][col]===0 && state.board[row][col-1]===0 && state.board[row-1][col-1]===0 && state.board[row-1][col+1]===0 && state.board[row][col+1]===0){
+    		alert("Ese movimiento no se puede hacer")
+
+	    	}
+	    	else{
+				cambioState();
+			}
+
+    	}else if ((col-1)<0){
+    		if(state.board[row-1][col]===0 && state.board[row-1][col+1]===0 && state.board[row+1][col+1]===0 && state.board[row+1][col]===0 && state.board[row][col+1]===0){
+    		alert("Ese movimiento no se puede hacer")
+
+	    	}
+	    	else{
+				cambioState();
+			}
+
+
+    	}else if ((col+1)>7){
+    		if(state.board[row-1][col]===0 && state.board[row][col-1]===0 && state.board[row-1][col-1]===0  && state.board[row+1][col]===0 && state.board[row+1][col-1]===0){
+    		alert("Ese movimiento no se puede hacer")
+
+	    	}
+	    	else{
+				cambioState();
+			}
+
+    	}else{
+    		if(state.board[row-1][col]===0 && state.board[row][col-1]===0 && state.board[row-1][col-1]===0 && state.board[row-1][col+1]===0 && state.board[row+1][col+1]===0 && state.board[row+1][col]===0 && state.board[row][col+1]===0 && state.board[row+1][col-1]===0){
+    		alert("Ese movimiento no se puede hacer")
+
+	    	}
+	    	else{
+				cambioState();
+			}
+
+    	}
 	}
     return celda;
 	
 }
 const sumar = (a = 0, b) => a + b;
-
+//verifica ganador al sumar todos los valores de la matriz cuando ya esta lleno el tablero, si la suma es negativo, ganó jugador blanco, de lo contrario ganó el negro
 const verificarGanador=(state)=>{
 	if(!includes(flattenDeep(state.board),0)){
 		if (flattenDeep(state.board).reduce(sumar)>0){
@@ -119,6 +148,7 @@ const verificarGanador=(state)=>{
 
 }
 
+//renderizador del juego
 const render = (mount, state) => {
 	const {player1Turn}=state;
 	let colCounter=0;
@@ -128,6 +158,7 @@ const render = (mount, state) => {
     gboard.style.height='400px';
     gboard.style.padding = '25px';
     let rowCounter=0;
+    //por cada casilla de la matriz del estado, se inserta una celda al board
     state.board.map((x)=>{
     	x.map(
     		(element, index)=> renderCelda({
@@ -146,6 +177,7 @@ const render = (mount, state) => {
     	
 
 	});
+	//boton para ceder turno, dado que el jugador es el encargado de darle vuelta a las fichas
 	const boton = document.createElement('button');
     boton.style.width = '450px';
     boton.style.height = '40px';
@@ -156,9 +188,9 @@ const render = (mount, state) => {
     	root.innerHTML = '';
     	render (root, state);
     	if (state.player1Turn){
-    		alert('Turno de Jugador1 (Negro)');
+    		alert('Turno de Jugador1 (Negro) Punteo: '+flattenDeep(state.board).reduce(sumar));
     	}else{
-    		alert('Turno de Jugador2 (Blanco)');
+    		alert('Turno de Jugador2 (Blanco) Punteo: '+flattenDeep(state.board).reduce(sumar));
     	}
     	
     }
@@ -166,6 +198,7 @@ const render = (mount, state) => {
     mount.appendChild(gboard);
     mount.appendChild(boton);	
 }
+//estado del juego que defina quien esta jugando y la matriz del board
 const OTHELLO_STATE={
 	player1Turn:true,
 	board:[
